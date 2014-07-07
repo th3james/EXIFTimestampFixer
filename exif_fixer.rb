@@ -33,6 +33,12 @@ class Photo
     exif_photo = MiniExiftool.new(@file.path)
     exif_photo.filemodifydate
   end
+
+  def set_created_at(timestamp)
+    exif_photo = MiniExiftool.new(@file.path)
+    exif_photo.date_time_original = timestamp
+    exif_photo.create_date = timestamp
+  end
 end
 
 describe Photo do
@@ -76,6 +82,23 @@ describe Photo do
       photo = Photo.new(File.new("test_assets/fish.jpg"))
 
       expect(photo.get_non_standard_timestamp).to eq(expected_date)
+    end
+  end
+
+  describe ".set_created_at" do
+    it "sets the standard EXIF date fields to the given time" do
+      exif_data = double()
+      MiniExiftool.stub(:new).and_return(exif_data)
+
+      time_stamp = Time.now
+
+      expect(exif_data).to receive(:date_time_original=).with(time_stamp)
+      expect(exif_data).to receive(:create_date=).with(time_stamp)
+
+      filename = 'test_assets/fish.jpg'
+      photo = Photo.new(File.new(filename))
+
+      photo.set_created_at(time_stamp)
     end
   end
 end
