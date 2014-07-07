@@ -1,7 +1,10 @@
+require 'exiftool'
+
 class Photo
   SUPPORTED_TYPES = ['image/jpeg; charset=binary']
 
   def initialize file
+    @file = file
   end
 
   def self.from_directory directory_path
@@ -23,6 +26,11 @@ class Photo
     mimetype = `file -Ib "#{file.path}"`.gsub(/\n/,"")
 
     SUPPORTED_TYPES.include? mimetype
+  end
+
+  def get_non_standard_timestamp
+    exif_data = Exiftool.new(@file.path)
+    exif_data[:file_modify_date]
   end
 end
 
@@ -59,12 +67,23 @@ describe Photo do
       expect(result).to be(false)
     end
   end
+
+  describe ".get_non_standard_timestamp" do
+
+    it "returns the date modified from the non-standard field" do
+      expected_date = Time.parse("2005-09-13 09:26:58 +0100")
+      photo = Photo.new(File.new("test_assets/fish.jpg"))
+
+      expect(photo.get_non_standard_timestamp).to eq(expected_date)
+    end
+  end
 end
 
-=begin 
+=begin
 puts "What directory are the photos in?"
-photo_dir = gets
+photo_dir = gets.chomp
 
+puts "Opening directory #{photo_dir}"
 Photo.from_directory(photo_dir).each do |photo|
   timestamp = photo.get_non_standard_timestamp
   photo.set_created_at(timestamp)
