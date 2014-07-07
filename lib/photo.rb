@@ -39,4 +39,9 @@ class Photo
     exif_photo.create_date = timestamp
     exif_photo.save
   end
+
+  def path
+    @file.path
+  end
+
 end

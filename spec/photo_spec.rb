@@ -61,4 +61,14 @@ describe Photo do
       photo.set_created_at(time_stamp)
     end
   end
+
+  describe ".path" do
+    it "returns the file path" do
+      file = double()
+      the_path = "hat.jpg"
+      expect(file).to receive(:path).and_return(the_path)
+
+      expect(Photo.new(file).path).to eq(the_path)
+    end
+  end
 end
