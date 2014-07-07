@@ -2,4 +2,5 @@
 source "https://rubygems.org"
 
 gem "rspec"
-gem "exiftool"
+gem "mini_exiftool"
+gem "byebug"

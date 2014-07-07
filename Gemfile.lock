@@ -1,10 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    byebug (3.1.2)
+      columnize (~> 0.8)
+      debugger-linecache (~> 1.2)
+    columnize (0.8.9)
+    debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
-    exiftool (0.6.0)
-      json
-    json (1.8.1)
+    mini_exiftool (2.4.2)
     rspec (3.0.0)
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
@@ -22,5 +25,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  exiftool
+  byebug
+  mini_exiftool
   rspec

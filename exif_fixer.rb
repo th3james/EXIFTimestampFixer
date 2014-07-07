@@ -1,4 +1,5 @@
-require 'exiftool'
+require 'mini_exiftool'
+require 'byebug'
 
 class Photo
   SUPPORTED_TYPES = ['image/jpeg; charset=binary']
@@ -29,8 +30,8 @@ class Photo
   end
 
   def get_non_standard_timestamp
-    exif_data = Exiftool.new(@file.path)
-    exif_data[:file_modify_date]
+    exif_photo = MiniExiftool.new(@file.path)
+    exif_photo.filemodifydate
   end
 end
 
