@@ -53,6 +53,7 @@ describe Photo do
 
       expect(exif_data).to receive(:date_time_original=).with(time_stamp)
       expect(exif_data).to receive(:create_date=).with(time_stamp)
+      expect(exif_data).to receive(:save)
 
       filename = 'test_assets/fish.jpg'
       photo = Photo.new(File.new(filename))

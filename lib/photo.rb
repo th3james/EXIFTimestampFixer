@@ -37,5 +37,6 @@ class Photo
     exif_photo = MiniExiftool.new(@file.path)
     exif_photo.date_time_original = timestamp
     exif_photo.create_date = timestamp
+    exif_photo.save
   end
 end
